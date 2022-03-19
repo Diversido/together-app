@@ -100,7 +100,12 @@ export class SlackRequestService implements ISlackRequestService {
         isFromRepeatCheckIn: false,
       });
     } catch (error) {
-      console.error(error);
+      console.error({
+        ...modalServiceParams,
+        url,
+        member: memberWithToken,
+        isFromRepeatCheckIn: false,
+      });
       console.error(JSON.stringify((error as any).data));
       throw error;
     }
