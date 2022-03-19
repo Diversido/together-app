@@ -91,12 +91,20 @@ export class SlackRequestService implements ISlackRequestService {
       isProxy: false,
     });
 
-    return this.modalService.renderCheckInSelfConfirmation({
-      ...modalServiceParams,
-      url,
-      member: memberWithToken,
-      isFromRepeatCheckIn: false,
-    });
+    let res;
+    try {
+      res = await this.modalService.renderCheckInSelfConfirmation({
+        ...modalServiceParams,
+        url,
+        member: memberWithToken,
+        isFromRepeatCheckIn: false,
+      });
+    } catch (error) {
+      console.error(error);
+      console.error(JSON.stringify((error as any).data));
+      throw error;
+    }
+    return res;
   }
 
   public async handleRenderCheckInOtherMemberConfirmation(params: ActionHandlerParams<NonSlashCommandAction>): Promise<void> {
