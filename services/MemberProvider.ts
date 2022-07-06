@@ -71,7 +71,7 @@ export class MemberProvider extends PrismaService implements IMemberProvider {
 
   public async findBySlackId(slackId: string): Promise<Nullable<Member>> {
     const where = { slackId, ...this.globalWhere };
-    delete where.isDeleted;
+    delete where.isDeleted; // Fix for sync
     const record = await this.connection.memberRecord.findFirst({
       where,
       include: { ...this.globalInclude },
